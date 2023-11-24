@@ -1,0 +1,55 @@
+Aquí tienes un ejemplo de código en Java para vender productos en una farmacia utilizando ArrayList:
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class VentaFarmacia {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> productos = new ArrayList<>();
+        ArrayList<Integer> cantidades = new ArrayList<>();
+        ArrayList<Double> precios = new ArrayList<>();
+
+        // Pedir al usuario los detalles de los productos a vender
+        System.out.print("Ingrese la cantidad de productos a vender: ");
+        int cantidadProductos = scanner.nextInt();
+
+        for (int i = 0; i < cantidadProductos; i++) {
+            System.out.print("Ingrese el nombre del producto " + (i + 1) + ": ");
+            String nombreProducto = scanner.next();
+            productos.add(nombreProducto);
+
+            System.out.print("Ingrese la cantidad a vender: ");
+            int cantidad = scanner.nextInt();
+            cantidades.add(cantidad);
+
+            System.out.print("Ingrese el precio unitario del producto: ");
+            double precioUnitario = scanner.nextDouble();
+            precios.add(precioUnitario);
+        }
+
+        // Calcular el total de la venta
+        double total = 0;
+        for (int i = 0; i < productos.size(); i++) {
+            double subtotal = cantidades.get(i) * precios.get(i);
+            total += subtotal;
+        }
+
+        // Mostrar el resumen de la venta
+        System.out.println("Resumen de la venta:");
+        for (int i = 0; i < productos.size(); i++) {
+            System.out.println("Producto: " + productos.get(i));
+            System.out.println("Cantidad: " + cantidades.get(i));
+            System.out.println("Precio unitario: " + precios.get(i));
+            System.out.println("Subtotal: " + (cantidades.get(i) * precios.get(i)));
+            System.out.println();
+        }
+        System.out.println("Total: " + total);
+
+        // Cerrar el scanner
+        scanner.close();
+    }
+}
+Este código utiliza ArrayList para almacenar los nombres de los productos, las cantidades y los precios unitarios. El usuario puede ingresar la cantidad de productos que desea vender y luego ingresar los detalles de cada producto, incluyendo el nombre, la cantidad y el precio unitario. Luego, se calcula el total de la venta sumando los subtotales de cada producto. Finalmente, se muestra un resumen de la venta, incluyendo el nombre del producto, la cantidad, el precio unitario y el subtotal de cada producto, así como el total de la venta.
+
+Espero que esto te sea útil. Si tienes alguna otra pregunta, ¡no dudes en preguntar!

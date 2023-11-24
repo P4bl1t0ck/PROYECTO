@@ -1,0 +1,73 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class CompraFarmacia {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Pedir al usuario los detalles del producto a comprar
+        System.out.print("Ingrese el nombre del producto: ");
+        String nombreProducto = scanner.nextLine();
+
+        System.out.print("Ingrese la cantidad a comprar: ");
+        int cantidad = scanner.nextInt();
+
+        System.out.print("Ingrese el precio unitario del producto: ");
+        double precioUnitario = scanner.nextDouble();
+
+        // Calcular el total de la compra
+        double total = cantidad * precioUnitario;
+
+        // Guardar los datos en la base de datos
+        try {
+            // Establecer la conexión con la base de datos
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/farmacia", "usuario", "contraseña");
+
+            // Preparar la sentencia SQL para insertar los datos
+            String sql = "INSERT INTO compras (nombre_producto, cantidad, precio_unitario, total) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, nombreProducto);
+            statement.setInt(2, cantidad);
+            statement.setDouble(3, precioUnitario);
+            statement.setDouble(4, total);
+
+            // Ejecutar la sentencia SQL
+            statement.executeUpdate();
+
+            // Cerrar la conexión con la base de datos
+            connection.close();
+
+            System.out.println("La compra se ha registrado correctamente en la base de datos.");
+        } catch (SQLException e) {
+            System.out.println("Error al guardar los datos en la base de datos: " + e.getMessage());
+        }
+
+        // Mostrar el resumen de la compra
+        System.out.println("Resumen de la compra:");
+        System.out.println("Producto: " + nombreProducto);
+        System.out.println("Cantidad: " + cantidad);
+        System.out.println("Precio unitario: " + precioUnitario);
+        System.out.println("Total: " + total);
+
+        // Realizar el pago
+        System.out.print("Ingrese el monto a pagar: ");
+        double montoPago = scanner.nextDouble();
+
+        // Calcular el cambio
+        double cambio = montoPago - total;
+
+        // Mostrar el cambio
+        System.out.println("Cambio: " + cambio);
+
+        // Cerrar el scanner
+        scanner.close();
+    }
+}
+Este código te permite ingresar el nombre del producto, la cantidad a comprar y el precio unitario del producto. Luego, calcula el total de la compra multiplicando la cantidad por el precio unitario. A continuación, se establece una conexión con una base de datos MySQL y se insertan los datos de la compra en una tabla llamada "compras". Finalmente, se muestra un resumen de la compra, se realiza el pago y se calcula el cambio.
+
+Recuerda que para que este código funcione correctamente, debes reemplazar "usuario" y "contraseña" con las credenciales adecuadas para acceder a tu base de datos MySQL.
+
+Espero que esto te sea útil. Si tienes alguna otra pregunta, ¡no dudes en preguntar!
